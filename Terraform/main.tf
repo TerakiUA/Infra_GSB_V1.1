@@ -18,6 +18,7 @@ resource "local_file" "private_key" {
 
 
 # Création des conteneurs LXC avec les configurations définies dans la variable lxc_linux
+
 resource "proxmox_lxc" "lxc_linux" {
 
   for_each = var.lxc_linux
@@ -51,6 +52,14 @@ resource "proxmox_lxc" "lxc_linux" {
   features {
     nesting = true
   }
+  
+  lxc_config = [
+    "lxc.apparmor.profile=unconfined",
+    "lxc.cap.drop=",
+    "lxc.cgroup2.devices.allow=a",
+    "lxc.mount.auto=proc:rw sys:rw"
+  ]
+
 }
 
 resource "proxmox_vm_qemu" "winsrv" {
