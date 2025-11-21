@@ -32,7 +32,7 @@ resource "proxmox_lxc" "lxc_linux" {
   cores            = each.value.cores
   memory           = each.value.memory
   ssh_public_keys  = tls_private_key.lxc_ssh_key[each.key].public_key_openssh
-  unprivileged     = true
+  unprivileged     = false
   nameserver       = "1.1.1.1 8.8.8.8"
 
   rootfs {
